@@ -1,1 +1,1 @@
-# polyalbum
+# monoalbum
