@@ -1,1 +1,3 @@
 creds
+backend/.cache
+backend/.env
