@@ -30,3 +30,12 @@ services:
     restart: always
     stdin_open: true # docker run -i
     tty: true        # docker run -t
+
+  frontend:
+    image: albumartdb/frontend:latest
+    container_name: frontend-container
+    restart: always
+    ports:
+      - 3000:3000
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t

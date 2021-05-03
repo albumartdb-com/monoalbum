@@ -1,7 +1,7 @@
 # get mvp python running via docker
 
 FROM archlinux:latest
-RUN pacman -Syu --noconfirm
+RUN pacman -Syyu --noconfirm
 RUN pacman -S --noconfirm python python-pip
 COPY requirements.txt .env /project/
 WORKDIR /project/
