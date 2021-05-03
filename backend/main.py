@@ -7,6 +7,8 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 from pymongo import MongoClient
 import json
+import requests
+import base64
 
 def main(): 
     # load envs from .env for spotify creds
@@ -32,21 +34,24 @@ def main():
     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
     
     # hit spotify
-    results = spotify.artist_top_tracks(lz_uri)
-    
-    # results
-    for track in results['tracks'][:10]:
-        print(track['album']['images'][0]['url'])
+    results = spotify.artist_albums(lz_uri, country="US")
+    print(json.dumps(results))
+
+    for album in results['items']:
+        artist = album["artists"][0]["name"]
+        album_name = album["name"]
+        art_url = album["images"][0]["url"]
+        
+        art_request = requests.get(art_url, allow_redirects=True)
+        art_b64 = base64.b64encode(art_request.content)
         document = {
-            "name": track['album']['name'],
-            "albumart_url": track['album']['images'][0]['url']
+            "artist": artist,
+            "album_name": album_name,
+            "albumart_base64": art_b64
             }
         # store in collection
         document_id = mongo_collection.insert_one(document).inserted_id
-    
-    #for track in results['tracks']:
-    #    print(track)
-        #print(json.dumps(track))
+        print(album_name + "album art inserted into mongo.")
     
 if __name__ == '__main__':
   main()
