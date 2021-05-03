@@ -35,7 +35,7 @@ def main():
     
     # hit spotify
     results = spotify.artist_albums(lz_uri, country="US")
-    print(json.dumps(results))
+#    print(json.dumps(results))
 
     for album in results['items']:
         artist = album["artists"][0]["name"]
@@ -51,7 +51,7 @@ def main():
             }
         # store in collection
         document_id = mongo_collection.insert_one(document).inserted_id
-        print(album_name + "album art inserted into mongo.")
+        print(album_name + " album art inserted into mongo.")
     
 if __name__ == '__main__':
   main()
