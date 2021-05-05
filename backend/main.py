@@ -10,10 +10,7 @@ import json
 import requests
 import base64
 
-def main(): 
-    # load envs from .env for spotify creds
-    load_dotenv()
-    
+def connect_to_db():
     # connect to mongo db
     mongo_uri = "mongodb://{}:{}@{}:{}".format(
         os.getenv('MONGO_ROOT_USER'),
@@ -22,13 +19,22 @@ def main():
         os.getenv('MONGO_PORT'),
         )
     mongo_client = MongoClient(mongo_uri)
-    mongo_db = mongo_client.albumart_db
-    mongo_collection = mongo_db.art
-    
+    return mongo_client.albumart_db.art
+
+
+def connect_to_spotify():
     # get access token for spotify
-    spotify = spotipy.Spotify(
+    return spotipy.Spotify(
         client_credentials_manager=SpotifyClientCredentials()
         )
+
+
+def main(): 
+    # load envs from .env for spotify creds
+    load_dotenv()
+    
+    mongo_collection = connect_to_db()
+    spotify = connect_to_spotify()
     
     # sample value to query spotify for
     lz_uri = 'spotify:artist:36QJpDe2go2KgaRleHCDTp'
