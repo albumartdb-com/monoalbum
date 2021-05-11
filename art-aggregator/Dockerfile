@@ -3,9 +3,10 @@
 FROM archlinux:latest
 RUN pacman -Syu --noconfirm
 RUN pacman -S --noconfirm python python-pip
-COPY requirements.txt .env /project/
-WORKDIR /project/
-RUN pip3 install -r requirements.txt
 # packages for testing only
-RUN pacman -S --noconfirm jq vi
-COPY main.py /project/
+RUN pacman -S --noconfirm jq vi curl
+WORKDIR /project/
+COPY requirements.txt /project/
+RUN pip3 install -r /project/requirements.txt
+COPY main.py .env json-util.py entrypoint.sh test* /project/
+ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
