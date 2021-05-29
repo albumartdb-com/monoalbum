@@ -84,7 +84,7 @@ def main():
     load_dotenv() 
     app = Flask(__name__)
     api = Api(app)
-    api.add_resource(Q, '/q')
+    api.add_resource(Q, '/search')
     app.run()
     
 if __name__ == '__main__':
