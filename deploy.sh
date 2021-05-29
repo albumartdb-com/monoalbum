@@ -15,7 +15,7 @@ fi
 # Build the art-aggregator image
 docker build -f $PWD/art-aggregator/Dockerfile -t albumartdb/art-aggregator $PWD/art-aggregator
 
-if [[ echo $? -eq 1 ]];
+if [[ $? -ne 0 ]];
 then
 	echo "Building the art-aggregator image failed."
 	echo "No containers (re)started."

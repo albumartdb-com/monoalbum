@@ -30,113 +30,53 @@ def connect_to_spotify():
         client_credentials_manager=SpotifyClientCredentials()
         )
 
-def get_artist_mongo(artist):
-    artist_collection = connect_to_mongo().artist
+def query_mongo(q):
+    collection = connect_to_mongo().art
     document = {}
-    document = artist_collection.find_one({
-        "artist": artist,
+    document = collection.find_one({
+        "name": q,
         })
     if bool(document):
         document.pop("_id")
-        logging.info("artist " + document["artist"] + " retrieved from local collection.")
+        logging.info("item " + document["name"] + " retrieved from local collection.")
     return document
 
-def get_album_mongo(artist, album):
-    album_collection = connect_to_mongo().album
-    document = {}
-    document = album_collection.find_one({
-        "artist": artist,
-        "album_name": album
-        })
-    if bool(document):
-        document.pop("_id")
-        logging.info("album " + document["album_name"] + " retrieved from local collection.")
-    return document
-
-def get_artist_spotify(artist):
-    artist_collection = connect_to_mongo().artist
+def query_spotify(q, query_type):
+#    artist_collection = connect_to_mongo().artist
     spotify = connect_to_spotify()
 
-    api_return = spotify.search(artist, type="artist", market="US")
-    artist_list = []
-    for retrieved_artist in api_return["artists"]["items"]: 
-        name = retrieved_artist["name"]
-        artist_id = retrieved_artist["id"]
-        artist_image_url = retrieved_artist["images"][0]["url"]
-
-        image_request = requests.get(artist_image_url, allow_redirects=True)
+    api_return = spotify.search(q, type=query_type, market="US")
+    ret_list = []
+    for retrieved_item in api_return[query_type + "s"]["items"]: 
+        name = retrieved_item["name"]
+        artist_id = retrieved_item["id"]
+        image_url = retrieved_item["images"][0]["url"]
+        image_request = requests.get(image_url, allow_redirects=True)
         image_str = base64.b64encode(image_request.content).decode('utf-8')
         document = {
-            "artist": name,
-            "id": artist_id,
-            "artist_image_encoded": image_str,
-            "source": "spotify"
+            "name": name,
+            "image_encoded": image_str,
+            "type": query_type,
+            "source": "spotify",
+            "id": artist_id
             }
-        artist_list.append(document)
-        document_id = artist_collection.insert_one(document).inserted_id
-        logging.info("artist " + name + " retrieved from spotify and saved to db for future use.")
-        document.pop("_id")
-    return artist_list
+        ret_list.append(document)
+#        document_id = artist_collection.insert_one(document).inserted_id
+        logging.info(query_type + name + " retrieved from spotify.")
+#        document.pop("_id")
+    return ret_list
 
-def get_album_spotify(artist, album):
-    artist_collection = connect_to_mongo().artist
-    try:
-        artist_id = artist_collection.find_one({
-            "artist": artist,
-            })["id"]
-    except:
-        logging.warning("need artist in mongo before asking for that artist's albums.")
-        return None
-
-    album_collection = connect_to_mongo().album
-    spotify = connect_to_spotify()
-
-    results = spotify.artist_albums(artist_id, country="US")
-
-    document = {}
-    for retrieved_album in results['items']:
-        if retrieved_album["name"] == album:
-            album_image_url = retrieved_album["images"][0]["url"]
-            image_request = requests.get(album_image_url, allow_redirects=True)
-            image_str = base64.b64encode(image_request.content).decode('utf-8')
-            document = {
-                "artist": artist,
-                "album_name": album,
-                "album_art_encoded": image_str,
-                "source": "spotify"
-                }
-            document_id = album_collection.insert_one(document).inserted_id
-            logging.info(album + " retrieved from spotify and saved to db for future use.")
-            document.pop("_id")
-            break
-    return document
-
-class Artist(Resource):
+class Q(Resource):
     def get(self):
         parser = reqparse.RequestParser() # init
-        parser.add_argument('artist', required=True)
+        parser.add_argument('q', required=True)
         args = parser.parse_args() # to dict
 
-        document = get_artist_mongo(args["artist"])
-        if bool(document):
-            result = document 
-        else:
-            result = get_artist_spotify(args["artist"])
-        return make_response(jsonify(result), 200)
+#        pdb.set_trace()
+        result = query_spotify(args["q"], "artist")
+        result.append(query_spotify(args["q"], "album"))
+        result.append(query_spotify(args["q"], "playlist"))
 
-# classes could be templated?
-class Album(Resource):
-    def get(self):
-        parser = reqparse.RequestParser() # init
-        parser.add_argument('artist', required=True)
-        parser.add_argument('album', required=True)
-        args = parser.parse_args() # to dict
-
-        document = get_album_mongo(args["artist"], args["album"])
-        if bool(document):
-            result = document 
-        else:
-            result = get_album_spotify(args["artist"], args["album"])
         return make_response(jsonify(result), 200)
 
 def main():
@@ -144,8 +84,7 @@ def main():
     load_dotenv() 
     app = Flask(__name__)
     api = Api(app)
-    api.add_resource(Artist, '/artist')
-    api.add_resource(Album, '/album')
+    api.add_resource(Q, '/search')
     app.run()
     
 if __name__ == '__main__':

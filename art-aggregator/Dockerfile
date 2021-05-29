@@ -8,5 +8,5 @@ RUN pacman -S --noconfirm jq vi curl
 WORKDIR /project/
 COPY requirements.txt /project/
 RUN pip3 install -r /project/requirements.txt
-COPY main.py .env json-util.py entrypoint.sh test* /project/
+COPY main.py .env entrypoint.sh test* /project/
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
