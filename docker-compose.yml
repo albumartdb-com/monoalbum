@@ -28,5 +28,9 @@ services:
     image: albumartdb/art-aggregator:latest
     container_name: art-aggregator-container
     restart: always
+    volumes:
+      - type: bind
+        source: $PWD/bind
+        target: /bind
     stdin_open: true # docker run -i
     tty: true        # docker run -t
