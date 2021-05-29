@@ -1,3 +1,5 @@
 .env
+env:Zone.Identifier
 backend/.cache
 backend/.env
+backend/env:Zone.Identifier
