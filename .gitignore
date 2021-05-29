@@ -1,5 +1,7 @@
 .env
+env:Zone.Identifier
 art-aggregator/.cache
 art-aggregator/.env
 art-aggregator/__pycache__/
+art-aggregator/env:Zone.Identifier
 bind/
