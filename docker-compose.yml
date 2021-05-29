@@ -24,10 +24,14 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
 
-  backend:
-    image: albumartdb/backend:latest
-    container_name: backend-container
+  art-aggregator:
+    image: albumartdb/art-aggregator:latest
+    container_name: art-aggregator-container
     restart: always
+    volumes:
+      - type: bind
+        source: $PWD/bind
+        target: /bind
     stdin_open: true # docker run -i
     tty: true        # docker run -t
 

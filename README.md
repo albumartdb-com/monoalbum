@@ -1,6 +1,6 @@
 # Monoalbum
 
-A website to find album art.  
+A website to find album art across many websites.  
 Very much pre-alpha.
 
 ### To build:  
@@ -21,11 +21,14 @@ Then run-
     ./deploy.sh
 
 ### To run: (testing only at the moment)
-    docker exec -ti backend-container bash
+    docker exec -ti art-aggregator-container bash
 
-That will get you in the backend container. Run it with   
+That will get you in the backend container. From here you can run a couple tests to confirm the Flask API is working. 
 
-    python3 main.py
+    ./test-api-artist.sh
 
-The input request is hardcoded for Led Zepplin at the moment.  
-Each album art image file for the selected artist is encoded and entered into the database. And a status indicator keeps the user informed of the progress.  
+or
+
+    ./test-api-album.sh
+    
+Feel free to change the script to get different albums or artists.

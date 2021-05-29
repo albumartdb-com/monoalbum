@@ -2,3 +2,6 @@ spotipy
 python-dotenv
 pymongo
 requests
+flask
+flask-restful
+jq
