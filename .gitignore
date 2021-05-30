@@ -2,4 +2,5 @@
 art-aggregator/.cache
 art-aggregator/.env
 art-aggregator/__pycache__/
+art-aggregator/*.log
 bind/
