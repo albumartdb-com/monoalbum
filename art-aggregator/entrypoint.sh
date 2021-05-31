@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python3 /project/main.py > /project/flask_log
+python3 /project/app.py > /project/flask_log
