@@ -2,7 +2,7 @@
 # This script builds all necessary images for the albumartdb project
 # Then it deploys the containers via docker-compose
 
-if [[ ! -f "$PWD/.env" ]] || [[ ! -f "$PWD/art-aggregator/.env" ]];
+if [ ! -f "$PWD/.env" ] || [ ! -f "$PWD/art-aggregator/.env" ];
 then
 	echo "Add .env file to both project root and art-aggregator first."
 	echo "Are you running this from the project root?"
@@ -22,7 +22,7 @@ fi
 # Build the art-aggregator image
 docker build -f $PWD/art-aggregator/Dockerfile -t albumartdb/art-aggregator $PWD/art-aggregator
 
-if [[ $? -ne 0 ]];
+if [ $? -ne 0 ];
 then
 	echo "Building the art-aggregator image failed."
 	echo "No containers (re)started."

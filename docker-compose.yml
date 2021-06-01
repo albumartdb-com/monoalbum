@@ -1,7 +1,6 @@
 # docker compose file to build all components of the albumartdb service
 
-version: '3.1'
-
+version: "3.2"
 services:
 
   mongo:
