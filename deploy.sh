@@ -10,7 +10,14 @@ then
 fi
 
 # Build the frontend image
-# ...
+docker build -f $PWD/frontend/Dockerfile -t albumartdb/fronted $PWD/frontend
+
+if [ $? -ne 0 ];
+then
+	echo "Building the frontend image failed."
+	echo "No containers (re)started."
+	exit 1
+fi
 
 # Build the art-aggregator image
 docker build -f $PWD/art-aggregator/Dockerfile -t albumartdb/art-aggregator $PWD/art-aggregator
