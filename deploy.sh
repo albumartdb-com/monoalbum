@@ -10,7 +10,7 @@ then
 fi
 
 # Build the frontend image
-docker build -f $PWD/frontend/Dockerfile -t albumartdb/fronted $PWD/frontend
+docker build -f $PWD/frontend/Dockerfile -t albumartdb/frontend $PWD/frontend
 
 if [ $? -ne 0 ];
 then

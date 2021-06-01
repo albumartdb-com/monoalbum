@@ -39,6 +39,8 @@ services:
     image: albumartdb/frontend:latest
     container_name: frontend-container
     restart: always
+    ports:
+      - 3000:3000
     volumes:
       - type: bind
         source: $PWD/bind
