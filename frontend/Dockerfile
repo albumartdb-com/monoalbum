@@ -1,8 +1,10 @@
 # get mvp python running via docker
 
-FROM archlinux:latest
-RUN pacman -Syyu --noconfirm
-RUN pacman -S --noconfirm npm
+FROM debian:latest
+RUN apt-get -qq -y update
+RUN apt-get -qq -y full-upgrade
+RUN apt-get -qq -y install npm
 WORKDIR /project/
 COPY ./myapp entrypoint.sh /project/
-ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
+WORKDIR /project/myapp
+ENTRYPOINT ["npm", "run", "dev"]
