@@ -1,6 +1,5 @@
 # integrating flask
-# goal: get a spotify album cover and store it in mongodb
-# BASED on specific request artist album combo via REST api
+# goal: get a spotify album cover and store it in mongodb BASED on specific request artist album combo via REST api
 
 # local files
 from api_calls import *
@@ -9,7 +8,10 @@ from mongo_calls import *
 from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 from dotenv import load_dotenv
+from logging.config import dictConfig
+import yaml
 import logging
+import ecs_logging
 
 
 class Q(Resource):
@@ -21,7 +23,8 @@ class Q(Resource):
         return make_response(jsonify(query_spotify(args['q'])), 200)
 
 def main():
-    logging.basicConfig(filename='art-aggregator.log')
+    print(ecs_logging.StdlibFormatter())
+    dictConfig(yaml.safe_load(open('logging.yaml', 'r')))
     load_dotenv() 
     app = Flask(__name__)
     api = Api(app)

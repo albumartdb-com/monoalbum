@@ -14,5 +14,5 @@ RUN apt-get -qq -y install jq vim curl man-db
 WORKDIR /project/
 COPY requirements.txt /project/
 RUN pip3 install -r /project/requirements.txt
-COPY app.py api_calls.py mongo_calls.py .env test* /project/
+COPY app.py api_calls.py mongo_calls.py .env logging.yaml test* /project/
 ENTRYPOINT ["python3", "/project/app.py"]

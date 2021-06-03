@@ -5,3 +5,5 @@ requests
 flask
 flask-restful
 jq
+ecs-logging
+pyyaml
