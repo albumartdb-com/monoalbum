@@ -1,7 +1,6 @@
 # docker compose file to build all components of the albumartdb service
 
-version: '3.1'
-
+version: "3.2"
 services:
 
   mongo:
@@ -28,9 +27,20 @@ services:
     image: albumartdb/art-aggregator:latest
     container_name: art-aggregator-container
     restart: always
+    ports:
+      - 5000:5000
     volumes:
       - type: bind
         source: $PWD/bind
         target: /bind
-    stdin_open: true # docker run -i
-    tty: true        # docker run -t
+
+  frontend:
+    image: albumartdb/frontend:latest
+    container_name: frontend-container
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: $PWD/bind
+        target: /bind

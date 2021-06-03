@@ -21,15 +21,8 @@ Then run-
 
     ./deploy.sh
 
-### To run: (testing only at the moment)
-    docker exec -ti art-aggregator-container bash
+From here you can run a test to confirm the Flask API is working. 
 
-That will get you in the backend container. From here you can run a couple tests to confirm the Flask API is working. 
+    ./art-aggregator/test_api_get.sh
 
-    ./test-api-artist.sh
-
-or
-
-    ./test-api-album.sh
-    
-Feel free to change the script to get different albums or artists.
+Feel free to change the script to search for a different value.
