@@ -8,4 +8,4 @@ art-aggregator/env:Zone.Identifier
 bind/*
 pyrightconfig.json
 keys/
-art-aggregator.log
+frontend/myapp/package-lock.json

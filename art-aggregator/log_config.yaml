@@ -8,7 +8,7 @@ handlers:
     level: DEBUG
     formatter: ecs
 
-    filename: art-aggregator.log
+    filename: /var/log/art-aggregator
 loggers:
   root:
     level: DEBUG
