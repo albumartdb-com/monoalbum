@@ -18,15 +18,6 @@ function MyApp({ Component, pageProps }) {
         crossorigin="anonymous"></script>
       </Head>
 
-      <Navbar>
-        <Navbar.Brand href="/">Monoalbum</Navbar.Brand>
-        <Nav>
-            <Nav.Link href="/test">
-                Home
-            </Nav.Link>
-        </Nav>
-      </Navbar>
-
       <Component {...pageProps} />
 
       <Card.Footer>

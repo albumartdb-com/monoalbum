@@ -6,7 +6,7 @@ export default function SearchBar() {
             </label>
             <input
                 type="text"
-                placeholder="Search monoalbum"
+                placeholder="Search for albums, artists, singles"
                 name="s"
             />
             <button type="submit">Search</button>
