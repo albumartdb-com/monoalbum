@@ -22,11 +22,7 @@ export default function SearchBar() {
             </label>
             <input
                 type="text"
-<<<<<<< HEAD
                 placeholder="Search for albums, artists, singles"
-=======
-                placeholder="Search monoalbum"
->>>>>>> d2ee1acf954c4a92babc4d50472c42e0c5a78d6f
                 onChange={e => setInput(e.target.value)}
                 value={input}
                 name="s"
