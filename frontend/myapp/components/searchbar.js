@@ -2,10 +2,10 @@ import {useState} from 'react'
 
 export default function SearchBar() {
     const [input, setInput] = useState('')
-    
+        
     function handleSubmit(e) {
         e.preventDefault()
-        fetch(`http://localhost:5000/?q=${input}`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/?q=${input}`, {
             method: "GET" 
         })
         .then(response => response.json())
