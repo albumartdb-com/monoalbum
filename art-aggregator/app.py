@@ -24,8 +24,7 @@ class Q(Resource):
         return make_response(jsonify(query_spotify(args['q'])), 200)
 
 def main():
-    print(ecs_logging.StdlibFormatter())
-    dictConfig(yaml.safe_load(open('logging.yaml', 'r')))
+    dictConfig(yaml.safe_load(open('log_config.yaml', 'r')))
     load_dotenv() 
     app = Flask(__name__)
     CORS(app)

@@ -1,0 +1,19 @@
+version: 1
+formatters:
+  ecs:
+    (): ext://ecs_logging.StdlibFormatter
+handlers:
+  file:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: ecs
+
+    filename: /var/log/art-aggregator
+loggers:
+  root:
+    level: DEBUG
+    handlers: [file]
+    propagate: no
+root:
+  level: DEBUG
+  handlers: [file]
