@@ -7,6 +7,7 @@ from mongo_calls import *
 
 from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 from dotenv import load_dotenv
 from logging.config import dictConfig
 import yaml
@@ -26,6 +27,7 @@ def main():
     dictConfig(yaml.safe_load(open('log_config.yaml', 'r')))
     load_dotenv() 
     app = Flask(__name__)
+    CORS(app)
     api = Api(app)
     api.add_resource(Q, '/')
     app.run(
