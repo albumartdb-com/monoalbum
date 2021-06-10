@@ -1,26 +1,13 @@
 import Head from 'next/head'
 import {useState, useEffect} from 'react'
 import NavBar from '../components/navbar'
-import SearchBar from '../components/searchbar'
+import SearchBar from '../components/searchbar/searchbar'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [albums, setAlbums] = useState([])
-  const [artists, setArtists] = useState([])
-
+  // Todo: Make it so it goes to a different page onsubmit. Pass chosen 
+  // value up from search_suggestion.js
   function handleSubmit(event, input) {
-      event.preventDefault()
-      fetch(`http://localhost:5000/?q=${input}`, {
-          method: "GET" 
-      })
-      .then(response => response.json())
-      .then(data => {
-        setAlbums(data.albums.items)
-        setArtists(data.artists.items)
-      })
-      .catch((error) => {
-          console.error('Error:', error)
-      });
   }
 
   return (
@@ -36,20 +23,8 @@ export default function Home() {
         <SearchBar
           onSubmit={handleSubmit}
         />
-        <ul>
-          {
-            Object.entries(albums).slice(0, 10).map(([key, value]) => {
-              return <li id={value.id}>{value.name}</li>
-            })
-          }
-        </ul>
-        <ul>
-          {
-            Object.entries(artists).slice(0, 10).map(([key, value]) => {
-              return <li id={value.id}>{value.name}</li>
-            })
-          }
-        </ul>
+        {/* Remove this line later, just to test the suggestion box positioning*/}
+        <h1 className={styles.content}>Test to see if search suggestion convers this up</h1>
       </main>
     </div>
   )
