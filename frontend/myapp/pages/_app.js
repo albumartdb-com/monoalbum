@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Card, Nav,Navbar} from 'react-bootstrap'
+import {Card} from 'react-bootstrap'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {

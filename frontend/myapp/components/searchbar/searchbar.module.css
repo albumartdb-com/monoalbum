@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+}
+
+.input{
+  width: 90%;
+}
+
+.button {
+  width: 10%;
+}
+
+.suggestions {
+  position: relative;
+}
