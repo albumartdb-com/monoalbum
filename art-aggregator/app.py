@@ -20,9 +20,9 @@ class Q(Resource):
         try:
             response = query_spotify(args['q'])
         except:
-            return make_response(jsonify("", 404))
+            return make_response("{}", 404)
 
-        return make_response(jsonify(response, 200))
+        return make_response(jsonify(response), 200)
 
 def main():
     app = Flask(__name__)
