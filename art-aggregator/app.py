@@ -9,11 +9,7 @@ from flask import Flask, jsonify, make_response
 from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 from dotenv import load_dotenv
-from logging.config import dictConfig
-import yaml
-import logging
-import ecs_logging
-
+from configured_logger import log
 
 class Q(Resource):
     def get(self):
@@ -21,11 +17,14 @@ class Q(Resource):
         parser.add_argument('q', required=True)
         args = parser.parse_args() # to dict
 
-        return make_response(jsonify(query_spotify(args['q'])), 200)
+        try:
+            response = query_spotify(args['q'])
+        except:
+            return make_response(jsonify("", 404))
+
+        return make_response(jsonify(response, 200))
 
 def main():
-    dictConfig(yaml.safe_load(open('log_config.yaml', 'r')))
-    load_dotenv() 
     app = Flask(__name__)
     CORS(app)
     api = Api(app)
