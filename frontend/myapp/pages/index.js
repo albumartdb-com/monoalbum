@@ -24,7 +24,7 @@ export default function Home() {
           onSubmit={handleSubmit}
         />
         {/* Remove this line later, just to test the suggestion box positioning*/}
-        <h1 className={styles.content}>Test to see if search suggestion convers this up</h1>
+        <h1 className={styles.content}>Test to see if search suggestion covers this up</h1>
       </main>
     </div>
   )
