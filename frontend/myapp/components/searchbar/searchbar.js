@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import SearchSuggestion from './search_suggestion.js'
 import styles from './searchbar.module.css'
 
@@ -14,26 +14,41 @@ export default function SearchBar({onSubmit}) {
   const [albums, setAlbums] = useState([])
   const [artists, setArtists] = useState([])
   const [isFocused, setFocused] = useState(false)
+  const timeoutRef = useRef(null)
 
-  // When the input value is changed call the API and populate the album and artist data
-  function handleChange(event) {
-      event.preventDefault()
-      setInput(event.target.value)
-      fetch(`http://localhost:5000/?q=${input}`, {
-          method: "GET" 
-      })
-      .then(response => response.json())
-      .then(data => {
-        setAlbums(data.albums.items)
-        setArtists(data.artists.items)
-      })
-      .catch((error) => {
-          console.error('Error:', error)
-      });
+  // Every time input value is changed it will wait 1000ms to call the API.
+  // Also clears artists and albums if there is no input value, since the 
+  // previous suggestions would show in the suggestion box.
+  useEffect(() => {
+    if(timeoutRef.current != null)
+      clearTimeout(timeoutRef.current)
+
+    timeoutRef.current = setTimeout(()=> {
+      timeoutRef.current = null;
+      input !== '' ? getData() : null;
+    },1000);  
+
+    if(!input) {
+      setAlbums([])
+      setArtists([])
+    }
+  }, [input])
+
+  // Requests data from the API. Probably needs to be changed in the future
+  function getData() {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/?q=${input}`, {
+        method: "GET" 
+    })
+    .then(response => response.json())
+    .then(data => {
+      setAlbums(data.albums.items)
+      setArtists(data.artists.items)
+    })
+    .catch((error) => {
+        console.error('Error:', error)
+    })
   }
 
-  // Conditionally render search suggestions when the input field is not an empty string
-  // or when the input element is in focus
   function showSuggestions() {
     if(input && isFocused) {
       return (
@@ -62,7 +77,7 @@ export default function SearchBar({onSubmit}) {
             className={styles.input}
             type="text"
             placeholder="Search for albums, artists, singles"
-            onChange={e => handleChange(e)}
+            onChange={e => setInput(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             value={input}
