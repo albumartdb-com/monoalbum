@@ -8,3 +8,4 @@ jq
 ecs-logging
 pyyaml
 flask-cors
+pytest
