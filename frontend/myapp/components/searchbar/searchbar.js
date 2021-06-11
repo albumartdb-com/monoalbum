@@ -36,7 +36,7 @@ export default function SearchBar({onSubmit}) {
 
   // Requests data from the API. Probably needs to be changed in the future
   function getData() {
-    fetch(`http://localhost:5000/?q=${input}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/?q=${input}`, {
         method: "GET" 
     })
     .then(response => response.json())
