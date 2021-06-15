@@ -20,7 +20,8 @@ COPY filebeat.yml /etc/filebeat/
 WORKDIR /project/
 COPY requirements.txt /project/
 RUN pip3 install -q -r /project/requirements.txt
-COPY *.py log_config.yaml .env /project/
+COPY *.py log_config.yaml coverage.sh .coveragerc pytest.ini .env /project/
+COPY tests/ /project/tests
 
 # container executable
 COPY entrypoint.sh /usr/local/bin/
