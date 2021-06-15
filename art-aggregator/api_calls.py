@@ -33,4 +33,4 @@ def query_spotify(query, limit=50):
     if response.status_code != 200:
         log.critical("Spotify API request returned !200",)
         raise Exception
-    return response.json()
+    return response

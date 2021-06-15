@@ -22,7 +22,7 @@ class Q(Resource):
         except:
             return make_response("{}", 404)
 
-        return make_response(jsonify(response), 200)
+        return make_response(jsonify(response.json()), 200)
 
 def main():
     app = Flask(__name__)
