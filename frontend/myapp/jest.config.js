@@ -7,7 +7,8 @@ const config = {
   },
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-  }
+  },
+  testEnvironment: "jsdom"
 };
 
  module.exports = config;
