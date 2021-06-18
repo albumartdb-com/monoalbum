@@ -8,3 +8,6 @@ jq
 ecs-logging
 pyyaml
 flask-cors
+pytest
+coverage
+pytest-cov

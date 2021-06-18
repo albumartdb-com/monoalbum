@@ -1,0 +1,10 @@
+[report]
+fail_under = 80
+show_missing = True
+
+[run]
+source =
+	app
+	api_calls
+	mongo_calls
+	configured_logger

@@ -10,4 +10,5 @@ pyrightconfig.json
 keys/
 frontend/myapp/package-lock.json
 notes
-art-aggregator.log
+art-aggregator/.coverage
+art-aggregator/tests/__pycache__/
