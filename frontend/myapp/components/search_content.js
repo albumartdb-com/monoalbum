@@ -1,5 +1,10 @@
 import styles from './search_content.module.css'
 
+/*
+  Component to display search results. The results are seperated into Artists
+  and Albums. The search right now shows the top 5 results for each category.
+  Each image should link to the respective artists / album page when clicked.
+*/
 export default function SearchContent({content, isAlbum=false}) {
   console.log(content)
   return (
@@ -11,7 +16,7 @@ export default function SearchContent({content, isAlbum=false}) {
               <li className={styles.item}>
                 <img
                   className={styles.image}
-                  src={item.images[1].url} 
+                  src={item.images[0].url} 
                   alt={item.name}
                 >
                 </img> 

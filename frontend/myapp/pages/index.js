@@ -32,10 +32,17 @@ export default function Home() {
   },[searchVal, setSearchVal])
 
   function displayContent() {
+    // Todo: 
+    //   - Add a see all albums/artists button
+    //   - Link album / artists images to respective pages
+    //   - More stylizing!
+             
     if(searchVal) {
       return (
         <>
+          <p>Albums</p>
           <SearchContent content={albums} isAlbum={true}/>
+          <p>Artists</p>
           <SearchContent content={artists}/>
         </>
       )
@@ -55,6 +62,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <SearchBar
+          className={styles.searchbar}
           setSearchVal={setSearchVal}
         />
         { searchContent }
