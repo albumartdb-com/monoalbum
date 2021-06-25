@@ -1,6 +1,7 @@
 import Head from 'next/head'
-import {useState, useEffect, useRef, useCallback} from 'react'
+import {useState, useEffect} from 'react'
 import NavBar from '../components/navbar'
+import SearchContent from '../components/search_content' 
 import SearchBar from '../components/searchbar/searchbar'
 import styles from '../styles/Home.module.css'
 
@@ -30,24 +31,19 @@ export default function Home() {
     }
   },[searchVal, setSearchVal])
 
-  // Seperate contents of this function into it's own container in the future.
-  // Ideally should be one component that can be reused for both album and artist.
   function displayContent() {
+    // Todo: 
+    //   - Add a see all albums/artists button
+    //   - Link album / artists images to respective pages
+    //   - More stylizing!
+             
     if(searchVal) {
       return (
         <>
-          <h5>Artists</h5>
-          <ul>
-            {Object.entries(artists).slice(0, 5).map(([key, artist]) => {              
-              return <li key={artist.id}>{artist.name}</li>
-            })}
-          </ul>
-          <h5>Albums</h5>
-          <ul>
-            {Object.entries(albums).slice(0, 5).map(([key, album]) => {              
-              return <li key={album.id}>{album.name}</li>
-            })}
-          </ul>
+          <p>Albums</p>
+          <SearchContent content={albums} isAlbum={true}/>
+          <p>Artists</p>
+          <SearchContent content={artists}/>
         </>
       )
     }
@@ -66,9 +62,10 @@ export default function Home() {
 
       <main className={styles.main}>
         <SearchBar
+          className={styles.searchbar}
           setSearchVal={setSearchVal}
         />
-        {searchContent}
+        { searchContent }
       </main>
     </div>
   )
